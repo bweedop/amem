@@ -48,5 +48,3 @@ def makeMatrix(file):
     print(seqNames)
     print(seqs)
     print(events)
-
-makeMatrix('/home/god/Documents/KelcherResearch/testData/LSC1_completed.nex')
