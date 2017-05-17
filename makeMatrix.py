@@ -1,23 +1,23 @@
 from Bio import SeqIO
 
 def getSeqid(file):
-    #This function records the names and the sequences within the nexus file.
-    # The names of the sequences are placed in the seqid list and will be used to create the first column of the
-    # matrix.
-    seqid = []
+    """Record names and sequences within a nexus file
+    
+    The names of the sequences are placed in the seqid list and will
+    be used to create the first column of the matrix.
+    """
     with open(file, 'r') as fullFile:
-        for record in SeqIO.parse(fullFile, "nexus"):
-            seqid.append(record.id)
-    #Sequence names have been recorded in the list and are returned.
-    return seqid
+        output = [record.id for record in SeqIO.parse(fullFile, "nexus")]
+    
+    return output
+
 def getSeqs(file):
     #The sequences will be recorded and used to find which of the seqs have the event.
-    seqs = []
     with open(file, 'r') as fullFile:
-        for record in SeqIO.parse(fullFile, "nexus"):
-            seqs.append(record.seq)
+        seqs = [record.seq for record in SeqIO.parse(fullFile, "nexus")]
     #Sequences have been recorded in the list and are returned.
     return seqs
+
 def getEventNames(file):
     #The gene and the event names will be recorded in the allEvents list.
     allEvents = []
@@ -28,14 +28,8 @@ def getEventNames(file):
                 words = lines.split(' = ')
                 for word in words:
                     if 'CharSet' in word:
-                        events = word.split('CharSet ')
-                        for event in events:
-                            if event == '':
-                                pass
-                            elif event != '':
-                                #All the names of genes and events are recorded.
-                                allEvents.append(event)
-
+                        allEvents.append(word.replace('CharSet ', ''))
+    
     return allEvents
 
 def getLocations(file, events):
@@ -56,6 +50,5 @@ def getLocations(file, events):
                             for k in eventLocation:
                                 firstPositions = k.split()
                                 for l in firstPositions:
-                                    l = l.replace(';','')
-                                    allLocations.append(l)
-    print(allLocations)
+                                    allLocations.append(l.replace(';',''))
+    return allLocations
