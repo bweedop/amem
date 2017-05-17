@@ -19,9 +19,7 @@ def getSeqs(file):
     #Sequences have been recorded in the list and are returned.
     return seqs
 def getEventNames(file):
-    #The gene and the event names will be recorded in the allEvents list. The locations will be recorded in the
-    #  eventLocation list. This will be used to find where there is either a dash or a sequence. One or the other
-    #  will inform following functions whether a 0 or 1 should be placed in the matrix.
+    #The gene and the event names will be recorded in the allEvents list.
     allEvents = []
     with open(file, 'r') as handle:
         handle = handle.read()
@@ -37,14 +35,27 @@ def getEventNames(file):
                             elif event != '':
                                 #All the names of genes and events are recorded.
                                 allEvents.append(event)
-    return allEvents
-def getLocations(file):
-    eventNames = getEventNames(file)
 
-def makeMatrix(file):
-    seqNames = getSeqid(file)
-    seqs = getSeqs(file)
-    events = getEventNames(file)
-    print(seqNames)
-    print(seqs)
-    print(events)
+    return allEvents
+
+def getLocations(file, events):
+    #Function takes the nexus file and the list of event names as arguments. The locations will be recorded in the
+    #  eventLocation list.
+    allLocations = []
+    with open(file, 'r') as handle:
+        handle = handle.read()
+        for lines in handle.splitlines():
+            if 'CharSet'in lines:
+                eventsPlusLocations = lines.split('CharSet ')
+                currentEvent = events.pop(0)
+                for i in eventsPlusLocations:
+                    if currentEvent in i:
+                        locations = i.split(currentEvent+' = ')
+                        for j in locations:
+                            eventLocation = j.split(' ')
+                            for k in eventLocation:
+                                firstPositions = k.split()
+                                for l in firstPositions:
+                                    l = l.replace(';','')
+                                    allLocations.append(l)
+    print(allLocations)
