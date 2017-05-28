@@ -1,5 +1,4 @@
 from Bio import SeqIO
-import numpy as np
 
 """The following parser is for NEXUS files exported from the PHYdE program (Muller et al. 2005).
     The events must be labelled as: 'inversion', 'autoinsertion', 'autodeletion', 'autorepeatinsertion',
