@@ -1,6 +1,10 @@
 import xlrd
 import numpy as np
 import pandas as pd
+from Bio import SeqIO
+from Bio.Seq import Seq
+from Bio.Alphabet import generic_alphabet
+from Bio.SeqRecord import SeqRecord
 
 def loadSheet(file):
     #loads the .xlsx file into memory using the xlrd module.
