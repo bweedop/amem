@@ -18,7 +18,7 @@ def extractLocations(file):
     char_data = loadSheet(file)
     a_z = list(map(chr, range(97, 123)))
     a_z.extend(list(map(chr, range(65, 91))))
-    cells = [[str(char_data.cell_value(c, 0))] for c in range(char_data.nrows)]
+    cells = [[str(char_data.cell_value(c, 1))] for c in range(char_data.nrows)]
     for i in cells:
         if str(i)[2] in a_z:
             cells.remove(i)
@@ -29,7 +29,7 @@ def extractLocations(file):
 def extractType(file):
     #Extracts the type of each event from the 'type' column in the .xlsx file.
     char_data = loadSheet(file)
-    cells = [[str(char_data.cell_value(c, 2))] for c in range(char_data.nrows)]
+    cells = [[str(char_data.cell_value(c, 3))] for c in range(char_data.nrows)]
     for i in cells:
         if i == ['']:
             cells.remove(i)
@@ -41,7 +41,7 @@ def extractType(file):
 def extractTaxa(file):
     #Extracts the taxa names from the 'taxa' column in the .xlsx file.
     char_data = loadSheet(file)
-    cells = [[str(char_data.cell_value(c, 7))] for c in range(char_data.nrows)]
+    cells = [[str(char_data.cell_value(c, 8))] for c in range(char_data.nrows)]
     for i in cells:
         if i == ['']:
             cells.remove(i)
